@@ -10,6 +10,7 @@ package com.illposed.osc;
 
 import com.illposed.osc.utility.OSCJavaToByteArrayConverter;
 import java.nio.charset.Charset;
+import java.net.InetAddress;
 
 /**
  * OSCPacket is the abstract superclass for the various
@@ -26,6 +27,7 @@ abstract class AbstractOSCPacket implements OSCPacket {
 
 	/** Used to encode message addresses and string parameters. */
 	private Charset charset;
+	private InetAddress inetAddress;
 	private byte[] byteArray;
 
 	public AbstractOSCPacket() {
@@ -41,6 +43,16 @@ abstract class AbstractOSCPacket implements OSCPacket {
 	@Override
 	public void setCharset(Charset charset) {
 		this.charset = charset;
+	}
+	
+	@Override
+	public InetAddress getInetAddress() {
+		return inetAddress;
+	}
+
+	@Override
+	public void setInetAddress(InetAddress inetAddress) {
+		this.inetAddress = inetAddress;
 	}
 
 	/**
