@@ -9,6 +9,7 @@
 package com.illposed.osc;
 
 import java.nio.charset.Charset;
+import java.net.InetAddress;
 
 /**
  * OSCPacket is the abstract superclass for the various
@@ -35,6 +36,18 @@ public interface OSCPacket {
 	 * @param charset used to encode message addresses and string arguments.
 	 */
 	void setCharset(Charset charset);
+	
+	/**
+	 * Returns the inet address
+	 * @return inetAddress
+	 */
+	InetAddress getInetAddress();
+
+	/**
+	 * Sets the inet address
+	 * @param inetAddress
+	 */
+	void setInetAddress(InetAddress inetAddress);
 
 	/**
 	 * Return the OSC byte stream for this packet.
