@@ -132,6 +132,8 @@ public class OSCMessage extends AbstractOSCPacket {
 				args[i] = (Integer) argument;
 			} else if (argument instanceof Float) {
 				args[i] = ((Float) argument).intValue();
+			} else if (argument instanceof String) {
+				args[i] = Integer.parseInt((String)argument);
 			}
 		}
 		return args;
