@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TimeZone;
+
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -213,7 +215,7 @@ public class OSCMessageTest {
 	@Test
 	public void testArgumentTimestamp2000() {
 		final List<Object> args = new ArrayList<Object>(1);
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT-1"));
 		calendar.clear();
 		calendar.set(2000, 0, 0);
 		args.add(calendar.getTime());
@@ -226,7 +228,7 @@ public class OSCMessageTest {
 	@Test
 	public void testArgumentTimestampAfterFeb2036() {
 		final List<Object> args = new ArrayList<Object>(1);
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT-1"));
 		calendar.clear();
 		calendar.set(2037, 0, 0);
 		args.add(calendar.getTime());
