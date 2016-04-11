@@ -45,12 +45,3 @@ sourceSets {
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
-
-// Copy built jar file into export directory
-jar << {
-    new File ('export').mkdirs()
-    copy {
-      from jar.archivePath
-      into 'export'
-    }
-}
