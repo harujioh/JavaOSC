@@ -76,7 +76,7 @@ public class OSCPatternAddressSelector implements AddressSelector {
 	 * @param addressOrPattern to be split into parts, e.g.: "/hello/", "/hello//world//"
 	 * @return the given address or pattern split into parts: {"hello"}, {"hello, "", "world", ""}
 	 */
-	private static List<String> splitIntoParts(String addressOrPattern) {
+	public static List<String> splitIntoParts(String addressOrPattern) {
 
 		final List<String> parts = new ArrayList<String>(Arrays.asList(addressOrPattern.split("/", -1)));
 		if (addressOrPattern.startsWith("/")) {
