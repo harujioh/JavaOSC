@@ -107,54 +107,6 @@ public class OSCMessage extends AbstractOSCPacket {
 	public List<Object> getArguments() {
 		return Collections.unmodifiableList(arguments);
 	}
-	
-	/**
-	 * The arguments(array) of this message.
-	 * @return the arguments(array) to this message
-	 */
-	public Object[] getArgs() {
-		Object[] args = new Object[arguments.size()];
-		for (int i = 0; i < arguments.size(); i++) {
-			args[i] = arguments.get(i);
-		}
-		return args;
-	}
-
-	/**
-	 * The arguments(array int) of this message.
-	 * @return the arguments(array int) to this message
-	 */
-	public int[] getIntArgs() {
-		int[] args = new int[arguments.size()];
-		for (int i = 0; i < arguments.size(); i++) {
-			Object argument = arguments.get(i);
-			if (argument instanceof Integer) {
-				args[i] = (Integer) argument;
-			} else if (argument instanceof Float) {
-				args[i] = ((Float) argument).intValue();
-			} else if (argument instanceof String) {
-				args[i] = Integer.parseInt((String)argument);
-			}
-		}
-		return args;
-	}
-
-	/**
-	 * The arguments(array float) of this message.
-	 * @return the arguments(array float) to this message
-	 */
-	public float[] getFloatArgs() {
-		float[] args = new float[arguments.size()];
-		for (int i = 0; i < arguments.size(); i++) {
-			Object argument = arguments.get(i);
-			if (argument instanceof Integer) {
-				args[i] = (Integer) argument;
-			} else if (argument instanceof Float) {
-				args[i] = (Float) argument;
-			}
-		}
-		return args;
-	}
 
 	/**
 	 * Convert the address into a byte array.
