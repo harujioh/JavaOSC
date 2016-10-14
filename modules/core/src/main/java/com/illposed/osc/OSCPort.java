@@ -54,7 +54,7 @@ public class OSCPort {
 	 * Returns the socket associated with this port.
 	 * @return this ports socket
 	 */
-	protected DatagramSocket getSocket() {
+	public DatagramSocket getSocket() {
 		return socket;
 	}
 
@@ -62,7 +62,7 @@ public class OSCPort {
 	 * Returns the port number associated with this port.
 	 * @return this ports number
 	 */
-	protected int getPort() {
+	public int getPort() {
 		return port;
 	}
 
