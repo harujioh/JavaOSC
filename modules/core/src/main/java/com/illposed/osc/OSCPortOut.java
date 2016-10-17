@@ -94,4 +94,9 @@ public class OSCPortOut extends OSCPort {
 				new DatagramPacket(byteArray, byteArray.length, address, getPort());
 		getSocket().send(packet);
 	}
+	
+	@Override
+	public InetAddress getInetAddress() {
+		return this.address;
+	}
 }
