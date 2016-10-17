@@ -5,7 +5,7 @@ plugins {
 }
 
 def myAppName = 'JavaOSC'
-def myAppVersion = '1.0.1'
+def myAppVersion = '1.0.2'
 
 group = 'com.teamlab'
 version = myAppVersion
@@ -39,7 +39,7 @@ sourceSets {
 }
 
 jar {
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    from sourceSets.main.allSource
 }
 
 ext {
