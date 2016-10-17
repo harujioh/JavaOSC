@@ -9,6 +9,7 @@
 package com.illposed.osc;
 
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 /**
  * OSCPort is an abstract superclass, to send OSC messages,
@@ -54,15 +55,23 @@ public class OSCPort {
 	 * Returns the socket associated with this port.
 	 * @return this ports socket
 	 */
-	protected DatagramSocket getSocket() {
+	public DatagramSocket getSocket() {
 		return socket;
+	}
+
+	/**
+	 * Returns the socket inetaddress.
+	 * @return this ports socket inetaddress
+	 */
+	public InetAddress getInetAddress() {
+		return socket.getInetAddress();
 	}
 
 	/**
 	 * Returns the port number associated with this port.
 	 * @return this ports number
 	 */
-	protected int getPort() {
+	public int getPort() {
 		return port;
 	}
 
