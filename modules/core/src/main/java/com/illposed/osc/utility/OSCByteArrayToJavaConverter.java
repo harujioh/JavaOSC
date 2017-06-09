@@ -8,20 +8,20 @@
 
 package com.illposed.osc.utility;
 
-import com.illposed.osc.OSCBundle;
-import com.illposed.osc.OSCImpulse;
-import com.illposed.osc.OSCMessage;
-import com.illposed.osc.OSCPacket;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.illposed.osc.OSCBundle;
+import com.illposed.osc.OSCImpulse;
+import com.illposed.osc.OSCMessage;
+import com.illposed.osc.OSCPacket;
+
 /**
- * Utility class to convert a byte array,
- * conforming to the OSC byte stream format,
- * into Java objects.
+ * Utility class to convert a byte array, conforming to the OSC byte stream
+ * format, into Java objects.
  *
  * @author Chandrasekhar Ramakrishnan
  */
@@ -69,8 +69,8 @@ public class OSCByteArrayToJavaConverter {
 	private Charset charset;
 
 	/**
-	 * Creates a helper object for converting from a byte array
-	 * to an {@link OSCPacket} object.
+	 * Creates a helper object for converting from a byte array to an
+	 * {@link OSCPacket} object.
 	 */
 	public OSCByteArrayToJavaConverter() {
 
@@ -78,8 +78,9 @@ public class OSCByteArrayToJavaConverter {
 	}
 
 	/**
-	 * Returns the character set used to decode message addresses
-	 * and string parameters.
+	 * Returns the character set used to decode message addresses and string
+	 * parameters.
+	 * 
 	 * @return the character-encoding-set used by this converter
 	 */
 	public Charset getCharset() {
@@ -87,21 +88,28 @@ public class OSCByteArrayToJavaConverter {
 	}
 
 	/**
-	 * Sets the character set used to decode message addresses
-	 * and string parameters.
-	 * @param charset the desired character-encoding-set to be used by this converter
+	 * Sets the character set used to decode message addresses and string
+	 * parameters.
+	 * 
+	 * @param charset
+	 *            the desired character-encoding-set to be used by this
+	 *            converter
 	 */
 	public void setCharset(Charset charset) {
 		this.charset = charset;
 	}
 
 	/**
-	 * Converts a byte array into an {@link OSCPacket}
-	 * (either an {@link OSCMessage} or {@link OSCBundle}).
-	 * @param bytes the storage containing the raw OSC packet
-	 * @param bytesLength indicates how many bytes the package consists of (<code>&lt;= bytes.length</code>)
-	 * @return the successfully parsed OSC packet; in case of a problem,
-	 *   a <code>RuntimeException</code> is thrown
+	 * Converts a byte array into an {@link OSCPacket} (either an
+	 * {@link OSCMessage} or {@link OSCBundle}).
+	 * 
+	 * @param bytes
+	 *            the storage containing the raw OSC packet
+	 * @param bytesLength
+	 *            indicates how many bytes the package consists of
+	 *            (<code>&lt;= bytes.length</code>)
+	 * @return the successfully parsed OSC packet; in case of a problem, a
+	 *         <code>RuntimeException</code> is thrown
 	 */
 	public OSCPacket convert(byte[] bytes, int bytesLength) {
 
@@ -117,13 +125,11 @@ public class OSCByteArrayToJavaConverter {
 	}
 
 	/**
-	 * Checks whether my byte array is a bundle.
-	 * From the OSC 1.0 specifications:
-	 * <quote>
-	 * The contents of an OSC packet must be either an OSC Message
-	 * or an OSC Bundle. The first byte of the packet's contents unambiguously
-	 * distinguishes between these two alternatives.
-	 * </quote>
+	 * Checks whether my byte array is a bundle. From the OSC 1.0
+	 * specifications: <quote> The contents of an OSC packet must be either an
+	 * OSC Message or an OSC Bundle. The first byte of the packet's contents
+	 * unambiguously distinguishes between these two alternatives. </quote>
+	 * 
 	 * @return true if it the byte array is a bundle, false o.w.
 	 */
 	private boolean isBundle(final Input rawInput) {
@@ -133,8 +139,9 @@ public class OSCByteArrayToJavaConverter {
 	}
 
 	/**
-	 * Converts the byte array to a bundle.
-	 * Assumes that the byte array is a bundle.
+	 * Converts the byte array to a bundle. Assumes that the byte array is a
+	 * bundle.
+	 * 
 	 * @return a bundle containing the data specified in the byte stream
 	 */
 	private OSCBundle convertBundle(final Input rawInput) {
@@ -142,8 +149,7 @@ public class OSCByteArrayToJavaConverter {
 		rawInput.addToStreamPosition(BUNDLE_START.length() + 1);
 		final Date timestamp = readTimeTag(rawInput);
 		final OSCBundle bundle = new OSCBundle(timestamp);
-		final OSCByteArrayToJavaConverter myConverter
-				= new OSCByteArrayToJavaConverter();
+		final OSCByteArrayToJavaConverter myConverter = new OSCByteArrayToJavaConverter();
 		myConverter.setCharset(charset);
 		while (rawInput.getStreamPosition() < rawInput.getBytesLength()) {
 			// recursively read through the stream and convert packets you find
@@ -151,8 +157,7 @@ public class OSCByteArrayToJavaConverter {
 			if (packetLength == 0) {
 				throw new IllegalArgumentException("Packet length may not be 0");
 			} else if ((packetLength % 4) != 0) {
-				throw new IllegalArgumentException("Packet length has to be a multiple of 4, is:"
-						+ packetLength);
+				throw new IllegalArgumentException("Packet length has to be a multiple of 4, is:" + packetLength);
 			}
 			final byte[] packetBytes = new byte[packetLength];
 			System.arraycopy(rawInput.getBytes(), rawInput.getStreamPosition(), packetBytes, 0, packetLength);
@@ -164,8 +169,9 @@ public class OSCByteArrayToJavaConverter {
 	}
 
 	/**
-	 * Converts the byte array to a simple message.
-	 * Assumes that the byte array is a message.
+	 * Converts the byte array to a simple message. Assumes that the byte array
+	 * is a message.
+	 * 
 	 * @return a message containing the data specified in the byte stream
 	 */
 	private OSCMessage convertMessage(final Input rawInput) {
@@ -189,6 +195,7 @@ public class OSCByteArrayToJavaConverter {
 
 	/**
 	 * Reads a string from the byte stream.
+	 * 
 	 * @return the next string in the byte stream
 	 */
 	private String readString(final Input rawInput) {
@@ -201,6 +208,7 @@ public class OSCByteArrayToJavaConverter {
 
 	/**
 	 * Reads a binary blob from the byte stream.
+	 * 
 	 * @return the next blob in the byte stream
 	 */
 	private byte[] readBlob(final Input rawInput) {
@@ -214,8 +222,9 @@ public class OSCByteArrayToJavaConverter {
 
 	/**
 	 * Reads the types of the arguments from the byte stream.
-	 * @return a char array with the types of the arguments,
-	 *   or <code>null</code>, in case of no arguments
+	 * 
+	 * @return a char array with the types of the arguments, or
+	 *         <code>null</code>, in case of no arguments
 	 */
 	private CharSequence readTypes(final Input rawInput) {
 		final String typesStr;
@@ -238,50 +247,53 @@ public class OSCByteArrayToJavaConverter {
 
 	/**
 	 * Reads an object of the type specified by the type char.
-	 * @param type type of the argument to read
+	 * 
+	 * @param type
+	 *            type of the argument to read
 	 * @return a Java representation of the argument
 	 */
 	private Object readArgument(final Input rawInput, final char type) {
 		switch (type) {
-			case 'u' :
-				return readUnsignedInteger(rawInput);
-			case 'i' :
-				return readInteger(rawInput);
-			case 'h' :
-				return readLong(rawInput);
-			case 'f' :
-				return readFloat(rawInput);
-			case 'd' :
-				return readDouble(rawInput);
-			case 's' :
-				return readString(rawInput);
-			case 'b' :
-				return readBlob(rawInput);
-			case 'c' :
-				return readChar(rawInput);
-			case 'N' :
-				return null;
-			case 'T' :
-				return Boolean.TRUE;
-			case 'F' :
-				return Boolean.FALSE;
-			case 'I' :
-				return OSCImpulse.INSTANCE;
-			case 't' :
-				return readTimeTag(rawInput);
-			default:
-				// XXX Maybe we should let the user choose what to do in this
-				//   case (we encountered an unknown argument type in an
-				//   incomming message):
-				//   just ignore (return null), or throw an exception?
-//				throw new UnsupportedOperationException(
-//						"Invalid or not yet supported OSC type: '" + type + "'");
-				return null;
+		case 'u':
+			return readUnsignedInteger(rawInput);
+		case 'i':
+			return readInteger(rawInput);
+		case 'h':
+			return readLong(rawInput);
+		case 'f':
+			return readFloat(rawInput);
+		case 'd':
+			return readDouble(rawInput);
+		case 's':
+			return readString(rawInput);
+		case 'b':
+			return readBlob(rawInput);
+		case 'c':
+			return readChar(rawInput);
+		case 'N':
+			return null;
+		case 'T':
+			return Boolean.TRUE;
+		case 'F':
+			return Boolean.FALSE;
+		case 'I':
+			return OSCImpulse.INSTANCE;
+		case 't':
+			return readTimeTag(rawInput);
+		default:
+			// XXX Maybe we should let the user choose what to do in this
+			// case (we encountered an unknown argument type in an
+			// incomming message):
+			// just ignore (return null), or throw an exception?
+			// throw new UnsupportedOperationException(
+			// "Invalid or not yet supported OSC type: '" + type + "'");
+			return null;
 		}
 	}
 
 	/**
 	 * Reads a char from the byte stream.
+	 * 
 	 * @return a {@link Character}
 	 */
 	private Character readChar(final Input rawInput) {
@@ -292,11 +304,12 @@ public class OSCByteArrayToJavaConverter {
 		final byte[] myBytes = new byte[numBytes];
 		System.arraycopy(rawInput.getBytes(), rawInput.getStreamPosition(), myBytes, 0, numBytes);
 		rawInput.addToStreamPosition(numBytes);
-		return  new BigInteger(myBytes);
+		return new BigInteger(myBytes);
 	}
 
 	/**
 	 * Reads a double from the byte stream.
+	 * 
 	 * @return a 64bit precision floating point value
 	 */
 	private Object readDouble(final Input rawInput) {
@@ -306,6 +319,7 @@ public class OSCByteArrayToJavaConverter {
 
 	/**
 	 * Reads a float from the byte stream.
+	 * 
 	 * @return a 32bit precision floating point value
 	 */
 	private Float readFloat(final Input rawInput) {
@@ -315,6 +329,7 @@ public class OSCByteArrayToJavaConverter {
 
 	/**
 	 * Reads a double precision integer (64 bit integer) from the byte stream.
+	 * 
 	 * @return double precision integer (64 bit)
 	 */
 	private Long readLong(final Input rawInput) {
@@ -324,6 +339,7 @@ public class OSCByteArrayToJavaConverter {
 
 	/**
 	 * Reads an Integer (32 bit integer) from the byte stream.
+	 * 
 	 * @return an {@link Integer}
 	 */
 	private Integer readInteger(final Input rawInput) {
@@ -332,10 +348,12 @@ public class OSCByteArrayToJavaConverter {
 	}
 
 	/**
-	 * Reads an unsigned integer (32 bit) from the byte stream.
-	 * This code is copied from {@see http://darksleep.com/player/JavaAndUnsignedTypes.html},
+	 * Reads an unsigned integer (32 bit) from the byte stream. This code is
+	 * copied from {@see http://darksleep.com/player/JavaAndUnsignedTypes.html},
 	 * which is licensed under the Public Domain.
-	 * @return single precision, unsigned integer (32 bit) wrapped in a 64 bit integer (long)
+	 * 
+	 * @return single precision, unsigned integer (32 bit) wrapped in a 64 bit
+	 *         integer (long)
 	 */
 	private Long readUnsignedInteger(final Input rawInput) {
 
@@ -343,18 +361,14 @@ public class OSCByteArrayToJavaConverter {
 		final int secondByte = (0x000000FF & ((int) rawInput.getBytes()[rawInput.getAndIncreaseStreamPositionByOne()]));
 		final int thirdByte = (0x000000FF & ((int) rawInput.getBytes()[rawInput.getAndIncreaseStreamPositionByOne()]));
 		final int fourthByte = (0x000000FF & ((int) rawInput.getBytes()[rawInput.getAndIncreaseStreamPositionByOne()]));
-		return ((long) (firstByte << 24
-				| secondByte << 16
-				| thirdByte << 8
-				| fourthByte))
-				& 0xFFFFFFFFL;
+		return ((long) (firstByte << 24 | secondByte << 16 | thirdByte << 8 | fourthByte)) & 0xFFFFFFFFL;
 	}
 
 	/**
-	 * Reads the time tag and convert it to a Java Date object.
-	 * A timestamp is a 64 bit number representing the time in NTP format.
-	 * The first 32 bits are seconds since 1900, the second 32 bits are
-	 * fractions of a second.
+	 * Reads the time tag and convert it to a Java Date object. A timestamp is a
+	 * 64 bit number representing the time in NTP format. The first 32 bits are
+	 * seconds since 1900, the second 32 bits are fractions of a second.
+	 * 
 	 * @return a {@link Date}
 	 */
 	private Date readTimeTag(final Input rawInput) {
@@ -411,8 +425,10 @@ public class OSCByteArrayToJavaConverter {
 
 	/**
 	 * Reads an array from the byte stream.
+	 * 
 	 * @param types
-	 * @param pos at which position to start reading
+	 * @param pos
+	 *            at which position to start reading
 	 * @return the array that was read
 	 */
 	private List<Object> readArray(final Input rawInput, final CharSequence types, int pos) {
@@ -439,8 +455,8 @@ public class OSCByteArrayToJavaConverter {
 	}
 
 	/**
-	 * Move to the next byte with an index in the byte array
-	 * which is dividable by four.
+	 * Move to the next byte with an index in the byte array which is dividable
+	 * by four.
 	 */
 	private void moveToFourByteBoundry(final Input rawInput) {
 		// If i am already at a 4 byte boundry, I need to move to the next one

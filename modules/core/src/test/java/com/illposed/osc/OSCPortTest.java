@@ -11,6 +11,7 @@ package com.illposed.osc;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,7 +27,7 @@ public class OSCPortTest {
 	public ExpectedException expectedException = ExpectedException.none();
 
 	private OSCPortOut sender;
-	private OSCPortIn  receiver;
+	private OSCPortIn receiver;
 
 	@Before
 	public void setUp() throws Exception {
@@ -56,8 +57,8 @@ public class OSCPortTest {
 
 		// check if the underlying sockets were closed
 		// NOTE We can have many (out-)sockets sending
-		//   on the same address and port,
-		//   but only one receiving per each such tuple.
+		// on the same address and port,
+		// but only one receiving per each such tuple.
 		sender = new OSCPortOut();
 		receiver = new OSCPortIn(OSCPort.defaultSCOSCPort());
 	}
@@ -75,8 +76,8 @@ public class OSCPortTest {
 
 		// check if the underlying sockets were closed
 		// NOTE We can have many (out-)sockets sending
-		//   on the same address and port,
-		//   but only one receiving per each such tuple.
+		// on the same address and port,
+		// but only one receiving per each such tuple.
 		sender = new OSCPortOut();
 		receiver = new OSCPortIn(OSCPort.defaultSCOSCPort());
 	}
@@ -84,23 +85,18 @@ public class OSCPortTest {
 	@Test
 	public void testPorts() throws Exception {
 
-		Assert.assertEquals("Bad default SuperCollider OSC port",
-				57110, OSCPort.defaultSCOSCPort());
-		Assert.assertEquals("Bad default SuperCollider Language OSC port",
-				57120, OSCPort.defaultSCLangOSCPort());
+		Assert.assertEquals("Bad default SuperCollider OSC port", 57110, OSCPort.defaultSCOSCPort());
+		Assert.assertEquals("Bad default SuperCollider Language OSC port", 57120, OSCPort.defaultSCLangOSCPort());
 
-		Assert.assertEquals("Bad default port with ctor()",
-				57110, sender.getPort());
+		Assert.assertEquals("Bad default port with ctor()", 57110, sender.getPort());
 
 		sender.close();
 		sender = new OSCPortOut(InetAddress.getLocalHost());
-		Assert.assertEquals("Bad default port with ctor(address)",
-				57110, sender.getPort());
+		Assert.assertEquals("Bad default port with ctor(address)", 57110, sender.getPort());
 
 		sender.close();
 		sender = new OSCPortOut(InetAddress.getLocalHost(), 12345);
-		Assert.assertEquals("Bad port with ctor(address, port)",
-				12345, sender.getPort());
+		Assert.assertEquals("Bad port with ctor(address, port)", 12345, sender.getPort());
 	}
 
 	@Test
@@ -174,8 +170,8 @@ public class OSCPortTest {
 			Assert.fail("Message was not received");
 		}
 		if (!listener.getReceivedTimestamp().equals(bundle.getTimestamp())) {
-			Assert.fail("Message should have timestamp " + bundle.getTimestamp()
-					+ " but has " + listener.getReceivedTimestamp());
+			Assert.fail("Message should have timestamp " + bundle.getTimestamp() + " but has "
+					+ listener.getReceivedTimestamp());
 		}
 	}
 }

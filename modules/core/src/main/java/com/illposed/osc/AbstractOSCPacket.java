@@ -8,19 +8,19 @@
 
 package com.illposed.osc;
 
-import com.illposed.osc.utility.OSCJavaToByteArrayConverter;
-import java.nio.charset.Charset;
 import java.net.InetAddress;
+import java.nio.charset.Charset;
+
+import com.illposed.osc.utility.OSCJavaToByteArrayConverter;
 
 /**
- * OSCPacket is the abstract superclass for the various
- * kinds of OSC Messages.
+ * OSCPacket is the abstract superclass for the various kinds of OSC Messages.
  *
  * The actual packets are:
  * <ul>
  * <li>{@link OSCMessage}: simple OSC messages
- * <li>{@link OSCBundle}: OSC messages with timestamps
- *   and/or made up of multiple messages
+ * <li>{@link OSCBundle}: OSC messages with timestamps and/or made up of
+ * multiple messages
  * </ul>
  */
 abstract class AbstractOSCPacket implements OSCPacket {
@@ -44,7 +44,7 @@ abstract class AbstractOSCPacket implements OSCPacket {
 	public void setCharset(Charset charset) {
 		this.charset = charset;
 	}
-	
+
 	@Override
 	public InetAddress getInetAddress() {
 		return inetAddress;
@@ -56,8 +56,8 @@ abstract class AbstractOSCPacket implements OSCPacket {
 	}
 
 	/**
-	 * Generate a representation of this packet conforming to the
-	 * the OSC byte stream specification. Used Internally.
+	 * Generate a representation of this packet conforming to the the OSC byte
+	 * stream specification. Used Internally.
 	 */
 	private byte[] computeByteArray() {
 		final OSCJavaToByteArrayConverter stream = new OSCJavaToByteArrayConverter();
@@ -67,9 +67,11 @@ abstract class AbstractOSCPacket implements OSCPacket {
 
 	/**
 	 * Produces a byte array representation of this packet.
-	 * @param stream where to write the arguments to
-	 * @return the OSC specification conform byte array representation
-	 *   of this packet
+	 * 
+	 * @param stream
+	 *            where to write the arguments to
+	 * @return the OSC specification conform byte array representation of this
+	 *         packet
 	 */
 	protected abstract byte[] computeByteArray(OSCJavaToByteArrayConverter stream);
 
