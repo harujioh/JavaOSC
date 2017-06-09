@@ -122,10 +122,7 @@ public class OSCMessage extends AbstractOSCPacket {
 	 * @return the arguments to this message
 	 */
 	public String getArgumentsType() {
-		OSCJavaToByteArrayConverter converter = new OSCJavaToByteArrayConverter();
-		return arguments.stream() //
-				.map(a -> String.valueOf(converter.getType(a.getClass()))) //
-				.collect(Collectors.joining());
+		return new OSCJavaToByteArrayConverter().getTypes(arguments);
 	}
 
 	/**
@@ -185,5 +182,19 @@ public class OSCMessage extends AbstractOSCPacket {
 	public static boolean isValidAddress(String address) {
 		return (address != null) && !address.isEmpty() && address.charAt(0) == '/' && !address.contains("//")
 				&& !ILLEGAL_ADDRESS_CHAR.matcher(address).find();
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s{%s ,%s [%s]}", this.getClass().getName(), this.getAddress(), this.getArgumentsType(),
+				this.getArguments().stream() //
+						.map(a -> {
+							if (a instanceof String) {
+								return "\"" + a + "\"";
+							} else {
+								return a.toString();
+							}
+						}) //
+						.collect(Collectors.joining(", ")));
 	}
 }

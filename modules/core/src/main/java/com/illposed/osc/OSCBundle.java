@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.illposed.osc.utility.OSCJavaToByteArrayConverter;
 
@@ -170,5 +171,13 @@ public class OSCBundle extends AbstractOSCPacket {
 			stream.write(packetBytes);
 		}
 		return stream.toByteArray();
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s{timestamp=%s, packets=[%s]}", this.getClass().getName(), this.timestamp.toString(),
+				this.packets.stream() //
+						.map(p -> p.toString()) //
+						.collect(Collectors.joining(", ")));
 	}
 }

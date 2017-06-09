@@ -290,7 +290,7 @@ public class OSCJavaToByteArrayConverter {
 	 *            Class of a Java object in the arguments
 	 * @return argument type charcter
 	 */
-	public char getType(Class typeClass) {
+	private char getTypeChar(Class<?> typeClass) {
 
 		// A big ol' else-if chain -- what's polymorphism mean, again?
 		// I really wish I could extend the base classes!
@@ -318,52 +318,29 @@ public class OSCJavaToByteArrayConverter {
 	}
 
 	/**
-	 * Write the OSC specification type tag for the type a certain Java type
-	 * converts to.
-	 * 
-	 * @param typeClass
-	 *            Class of a Java object in the arguments
-	 */
-	public void writeType(Class typeClass) {
-		stream.write(getType(typeClass));
-	}
-
-	/**
 	 * Write the types for an array element in the arguments.
 	 * 
 	 * @param arguments
 	 *            array of base Objects
 	 */
-	private void writeTypesArray(Collection<Object> arguments) {
+	public String getTypes(Collection<Object> arguments) {
+		StringBuffer sb = new StringBuffer();
 
 		for (final Object argument : arguments) {
 			if (null == argument) {
-				stream.write('N');
+				sb.append("N");
 			} else if (argument instanceof Collection) {
-				// If the array at i is a type of array, write a '['.
-				// This is used for nested arguments.
-				stream.write('[');
-				// fill the [] with the SuperCollider types corresponding to
-				// the object (e.g., Object of type String needs -s).
-				// XXX Why not call this function, recursively? The only reason
-				// would be, to not allow nested arrays, but the specification
-				// does not say anythign about them not being allowed.
-				writeTypesArray((Collection<Object>) argument);
-				// close the array
-				stream.write(']');
+				sb.append("[").append(getTypes((Collection<Object>) argument)).append("]");
 			} else if (Boolean.TRUE.equals(argument)) {
-				stream.write('T');
+				sb.append("T");
 			} else if (Boolean.FALSE.equals(argument)) {
-				stream.write('F');
+				sb.append("F");
 			} else {
-				// go through the array and write the superCollider types as
-				// shown
-				// in the above method.
-				// The classes derived here are used as the arg to the above
-				// method.
-				writeType(argument.getClass());
+				sb.append(getTypeChar(argument.getClass()));
 			}
 		}
+
+		return sb.toString();
 	}
 
 	/**
@@ -374,7 +351,7 @@ public class OSCJavaToByteArrayConverter {
 	 */
 	public void writeTypes(Collection<Object> arguments) {
 
-		writeTypesArray(arguments);
+		getTypes(arguments).chars().forEach(stream::write);
 		// we always need to terminate with a zero,
 		// even if (especially when) the stream is already aligned.
 		stream.write(0);
