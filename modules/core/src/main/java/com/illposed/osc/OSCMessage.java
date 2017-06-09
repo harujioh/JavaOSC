@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * An simple (non-bundle) OSC message.
@@ -106,6 +107,17 @@ public class OSCMessage extends AbstractOSCPacket {
 	 */
 	public List<Object> getArguments() {
 		return Collections.unmodifiableList(arguments);
+	}
+
+	/**
+	 * The arguments type of this message.
+	 * @return the arguments to this message
+	 */
+	public String getArgumentsType() {
+		OSCJavaToByteArrayConverter converter = new OSCJavaToByteArrayConverter();
+		return arguments.stream() //
+				.map(a -> String.valueOf(converter.getType(a.getClass()))) //
+				.collect(Collectors.joining());
 	}
 
 	/**

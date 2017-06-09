@@ -449,6 +449,7 @@ public class OSCMessageTest {
 		if (!packet.getAddress().equals("/dummy")) {
 			Assert.fail("Send Big Integer did not receive the correct address");
 		}
+		Assert.assertEquals("h", packet.getArgumentsType());
 		List<Object> arguments = packet.getArguments();
 		if (arguments.size() != 1) {
 			Assert.fail("Send Big Integer should have 1 argument, not " + arguments.size());

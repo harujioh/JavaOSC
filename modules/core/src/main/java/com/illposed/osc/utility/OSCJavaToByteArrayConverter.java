@@ -255,36 +255,46 @@ public class OSCJavaToByteArrayConverter {
 	}
 
 	/**
+	 * Get the OSC specification type tag for the type a certain Java type
+	 * converts to.
+	 * @param typeClass Class of a Java object in the arguments
+	 * @return argument type charcter
+	 */
+	public char getType(Class typeClass) {
+
+		// A big ol' else-if chain -- what's polymorphism mean, again?
+		// I really wish I could extend the base classes!
+		if (Integer.class.equals(typeClass)) {
+			return 'i';
+		} else if (Long.class.equals(typeClass)) {
+			return 'h';
+		} else if (Date.class.equals(typeClass)) {
+			return 't';
+		} else if (Float.class.equals(typeClass)) {
+			return 'f';
+		} else if (Double.class.equals(typeClass)) {
+			return 'd';
+		} else if (String.class.equals(typeClass)) {
+			return 's';
+		} else if (byte[].class.equals(typeClass)) {
+			return 'b';
+		} else if (Character.class.equals(typeClass)) {
+			return 'c';
+		} else if (OSCImpulse.class.equals(typeClass)) {
+			return 'I';
+		} else {
+			throw new UnsupportedOperationException("Do not know the OSC type for the java class: "
+					+ typeClass);
+		}
+	}
+
+	/**
 	 * Write the OSC specification type tag for the type a certain Java type
 	 * converts to.
 	 * @param typeClass Class of a Java object in the arguments
 	 */
 	public void writeType(Class typeClass) {
-
-		// A big ol' else-if chain -- what's polymorphism mean, again?
-		// I really wish I could extend the base classes!
-		if (Integer.class.equals(typeClass)) {
-			stream.write('i');
-		} else if (Long.class.equals(typeClass)) {
-			stream.write('h');
-		} else if (Date.class.equals(typeClass)) {
-			stream.write('t');
-		} else if (Float.class.equals(typeClass)) {
-			stream.write('f');
-		} else if (Double.class.equals(typeClass)) {
-			stream.write('d');
-		} else if (String.class.equals(typeClass)) {
-			stream.write('s');
-		} else if (byte[].class.equals(typeClass)) {
-			stream.write('b');
-		} else if (Character.class.equals(typeClass)) {
-			stream.write('c');
-		} else if (OSCImpulse.class.equals(typeClass)) {
-			stream.write('I');
-		} else {
-			throw new UnsupportedOperationException("Do not know the OSC type for the java class: "
-					+ typeClass);
-		}
+		stream.write(getType(typeClass));
 	}
 
 	/**
