@@ -16,9 +16,9 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Runs a very basic benchmark test to check whether using an else-if-chain or
- * a HashMap based approach is faster, when trying to convert a java class to
- * an OSC Type indicator char.
+ * Runs a very basic benchmark test to check whether using an else-if-chain or a
+ * HashMap based approach is faster, when trying to convert a java class to an
+ * OSC Type indicator char.
  */
 public class BenchmarkHashMapVsElseIf {
 

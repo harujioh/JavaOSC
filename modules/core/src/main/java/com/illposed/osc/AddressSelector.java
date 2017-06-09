@@ -14,9 +14,11 @@ package com.illposed.osc;
 public interface AddressSelector {
 
 	/**
-	 * Checks whether the OSC <i>Address Pattern</i> in question
-	 * matches this selector.
-	 * @param messageAddress for example "/sc/mixer/volume"
+	 * Checks whether the OSC <i>Address Pattern</i> in question matches this
+	 * selector.
+	 * 
+	 * @param messageAddress
+	 *            for example "/sc/mixer/volume"
 	 * @return true if this matcher selects the message address in question.
 	 */
 	boolean matches(String messageAddress);

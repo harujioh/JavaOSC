@@ -8,12 +8,13 @@
 
 package com.illposed.osc.utility;
 
-import com.illposed.osc.AddressSelector;
 import java.util.regex.Pattern;
 
+import com.illposed.osc.AddressSelector;
+
 /**
- * Checks whether an OSC <i>Address Pattern</i> matches a given
- * Java regular expression.
+ * Checks whether an OSC <i>Address Pattern</i> matches a given Java regular
+ * expression.
  */
 public class JavaRegexAddressSelector implements AddressSelector {
 

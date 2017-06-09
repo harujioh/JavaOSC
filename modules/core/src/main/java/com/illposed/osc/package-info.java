@@ -7,6 +7,7 @@
  */
 
 /**
- * Provides the Java OSC API, which should be everything users of this library need.
+ * Provides the Java OSC API, which should be everything users of this library
+ * need.
  */
 package com.illposed.osc;

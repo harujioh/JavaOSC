@@ -8,13 +8,14 @@
 
 package com.illposed.osc.utility;
 
-import com.illposed.osc.OSCBundle;
-import com.illposed.osc.OSCMessage;
-import com.illposed.osc.SimpleOSCListener;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.illposed.osc.OSCBundle;
+import com.illposed.osc.OSCMessage;
+import com.illposed.osc.SimpleOSCListener;
 
 /**
  * @author Chandrasekhar Ramakrishnan

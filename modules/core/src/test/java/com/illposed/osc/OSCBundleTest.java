@@ -8,13 +8,15 @@
 
 package com.illposed.osc;
 
-import com.illposed.osc.utility.OSCByteArrayToJavaConverter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.illposed.osc.utility.OSCByteArrayToJavaConverter;
 
 /**
  * @author Chandrasekhar Ramakrishnan
@@ -27,9 +29,9 @@ public class OSCBundleTest {
 		OSCByteArrayToJavaConverter converter = new OSCByteArrayToJavaConverter();
 		OSCBundle packet = (OSCBundle) converter.convert(byteArray, byteArray.length);
 		if (!packet.getTimestamp().equals(expectedTimestamp)) {
-			Assert.fail("Send Bundle did not receive the correct timestamp " + packet.getTimestamp()
-				+ "(" + packet.getTimestamp().getTime() +
-				") (should be " + expectedTimestamp +"( " + expectedTimestamp.getTime() + ")) ");
+			Assert.fail("Send Bundle did not receive the correct timestamp " + packet.getTimestamp() + "("
+					+ packet.getTimestamp().getTime() + ") (should be " + expectedTimestamp + "( "
+					+ expectedTimestamp.getTime() + ")) ");
 		}
 		List<OSCPacket> packets = packet.getPackets();
 		OSCMessage msg = (OSCMessage) packets.get(0);

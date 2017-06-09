@@ -8,49 +8,54 @@
 
 package com.illposed.osc;
 
-import java.nio.charset.Charset;
 import java.net.InetAddress;
+import java.nio.charset.Charset;
 
 /**
- * OSCPacket is the abstract superclass for the various
- * kinds of OSC Messages.
+ * OSCPacket is the abstract superclass for the various kinds of OSC Messages.
  *
  * The actual packets are:
  * <ul>
  * <li>{@link OSCMessage}: simple OSC messages
- * <li>{@link OSCBundle}: OSC messages with timestamps
- *   and/or made up of multiple messages
+ * <li>{@link OSCBundle}: OSC messages with timestamps and/or made up of
+ * multiple messages
  * </ul>
  */
 public interface OSCPacket {
 
 	/**
 	 * Returns the character set used by this packet.
+	 * 
 	 * @return the character set used to encode message addresses and string
-	 *   arguments.
+	 *         arguments.
 	 */
 	Charset getCharset();
 
 	/**
 	 * Sets the character set used by this packet.
-	 * @param charset used to encode message addresses and string arguments.
+	 * 
+	 * @param charset
+	 *            used to encode message addresses and string arguments.
 	 */
 	void setCharset(Charset charset);
-	
+
 	/**
 	 * Returns the inet address
+	 * 
 	 * @return inetAddress
 	 */
 	InetAddress getInetAddress();
 
 	/**
 	 * Sets the inet address
+	 * 
 	 * @param inetAddress
 	 */
 	void setInetAddress(InetAddress inetAddress);
 
 	/**
 	 * Return the OSC byte stream for this packet.
+	 * 
 	 * @return byte[]
 	 */
 	byte[] getByteArray();

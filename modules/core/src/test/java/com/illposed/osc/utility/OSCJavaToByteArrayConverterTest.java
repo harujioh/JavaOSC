@@ -8,13 +8,15 @@
 
 package com.illposed.osc.utility;
 
-import com.illposed.osc.OSCMessageTest;
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.illposed.osc.OSCMessageTest;
 
 /**
  * This implementation is based on Markus Gaelli and Iannis Zannos's
  * <a href="http://www.emergent.de/Goodies/">OSC implementation in Squeak</a>
+ * 
  * @see OSCJavaToByteArrayConverter
  */
 public class OSCJavaToByteArrayConverterTest {
@@ -24,18 +26,17 @@ public class OSCJavaToByteArrayConverterTest {
 	}
 
 	/**
-	 * This is different from the SmallTalk implementation.
-	 * In Squeak, this produces:
-	 * byte[] answer = {62, 76, (byte) 204, (byte) 204};
-	 * (i.e. answer= {62, 76, -52, -52})
+	 * This is different from the SmallTalk implementation. In Squeak, this
+	 * produces: byte[] answer = {62, 76, (byte) 204, (byte) 204}; (i.e. answer=
+	 * {62, 76, -52, -52})
 	 *
-	 * The source of this discrepancy is Squeak conversion
-	 * routine <code>Float&gt;&gt;asIEEE32BitWord</code> vs. the Java
+	 * The source of this discrepancy is Squeak conversion routine
+	 * <code>Float&gt;&gt;asIEEE32BitWord</code> vs. the Java
 	 * {@link Float#floatToIntBits(float)}.
 	 *
 	 * <code>0.2 asIEEE32BitWord</code> yields: 1045220556
-	 * {@link Float#floatToIntBits(float)} with parameter 0.2f
-	 * yields: (int) 1045220557 (VA Java 3.5)
+	 * {@link Float#floatToIntBits(float)} with parameter 0.2f yields: (int)
+	 * 1045220557 (VA Java 3.5)
 	 *
 	 * Looks like there is an OBO bug somewhere -- either Java or Squeak.
 	 */
@@ -43,7 +44,7 @@ public class OSCJavaToByteArrayConverterTest {
 	public void testPrintFloat2OnStream() {
 		OSCJavaToByteArrayConverter stream = new OSCJavaToByteArrayConverter();
 		stream.write(0.2f);
-		byte[] answer = {62, 76, -52, -51};
+		byte[] answer = { 62, 76, -52, -51 };
 		byte[] result = stream.toByteArray();
 		checkResultEqualsAnswer(result, answer);
 	}
@@ -52,7 +53,7 @@ public class OSCJavaToByteArrayConverterTest {
 	public void testPrintFloatOnStream() {
 		OSCJavaToByteArrayConverter stream = new OSCJavaToByteArrayConverter();
 		stream.write(10.7567f);
-		byte[] answer = {65, 44, 27, 113};
+		byte[] answer = { 65, 44, 27, 113 };
 		byte[] result = stream.toByteArray();
 		checkResultEqualsAnswer(result, answer);
 	}
@@ -61,7 +62,7 @@ public class OSCJavaToByteArrayConverterTest {
 	public void testPrintIntegerOnStream() {
 		OSCJavaToByteArrayConverter stream = new OSCJavaToByteArrayConverter();
 		stream.write(Integer.valueOf(1124));
-		byte[] answer = {0, 0, 4, 100};
+		byte[] answer = { 0, 0, 4, 100 };
 		byte[] result = stream.toByteArray();
 		checkResultEqualsAnswer(result, answer);
 	}
@@ -70,7 +71,7 @@ public class OSCJavaToByteArrayConverterTest {
 	public void testPrintString2OnStream() {
 		OSCJavaToByteArrayConverter stream = new OSCJavaToByteArrayConverter();
 		stream.write("abcd");
-		byte[] answer = {97, 98, 99, 100, 0, 0, 0, 0};
+		byte[] answer = { 97, 98, 99, 100, 0, 0, 0, 0 };
 		byte[] result = stream.toByteArray();
 		checkResultEqualsAnswer(result, answer);
 	}
@@ -79,7 +80,7 @@ public class OSCJavaToByteArrayConverterTest {
 	public void testPrintStringOnStream() {
 		OSCJavaToByteArrayConverter stream = new OSCJavaToByteArrayConverter();
 		stream.write("abc");
-		byte[] answer = {97, 98, 99, 0};
+		byte[] answer = { 97, 98, 99, 0 };
 		byte[] result = stream.toByteArray();
 		checkResultEqualsAnswer(result, answer);
 	}
@@ -88,7 +89,7 @@ public class OSCJavaToByteArrayConverterTest {
 	public void testPrintLongOnStream() {
 		OSCJavaToByteArrayConverter stream = new OSCJavaToByteArrayConverter();
 		stream.write(1124L);
-		byte[] answer = {0, 0, 0, 0, 0, 0, 4, 100};
+		byte[] answer = { 0, 0, 0, 0, 0, 0, 4, 100 };
 		byte[] result = stream.toByteArray();
 		checkResultEqualsAnswer(result, answer);
 	}

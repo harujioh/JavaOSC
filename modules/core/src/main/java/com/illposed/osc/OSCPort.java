@@ -12,9 +12,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 /**
- * OSCPort is an abstract superclass, to send OSC messages,
- * use {@link OSCPortOut}.
- * To listen for OSC messages, use {@link OSCPortIn}.
+ * OSCPort is an abstract superclass, to send OSC messages, use
+ * {@link OSCPortOut}. To listen for OSC messages, use {@link OSCPortIn}.
  *
  * @author Chandrasekhar Ramakrishnan
  */
@@ -32,8 +31,8 @@ public class OSCPort {
 	}
 
 	/**
-	 * The port that the SuperCollider <b>synth</b> engine
-	 * usually listens to.
+	 * The port that the SuperCollider <b>synth</b> engine usually listens to.
+	 * 
 	 * @return default SuperCollider <b>synth</b> UDP port
 	 * @see #DEFAULT_SC_OSC_PORT
 	 */
@@ -42,8 +41,9 @@ public class OSCPort {
 	}
 
 	/**
-	 * The port that the SuperCollider <b>language</b> engine
-	 * usually listens to.
+	 * The port that the SuperCollider <b>language</b> engine usually listens
+	 * to.
+	 * 
 	 * @return default SuperCollider <b>language</b> UDP port
 	 * @see #DEFAULT_SC_LANG_OSC_PORT
 	 */
@@ -53,6 +53,7 @@ public class OSCPort {
 
 	/**
 	 * Returns the socket associated with this port.
+	 * 
 	 * @return this ports socket
 	 */
 	public DatagramSocket getSocket() {
@@ -61,6 +62,7 @@ public class OSCPort {
 
 	/**
 	 * Returns the socket inetaddress.
+	 * 
 	 * @return this ports socket inetaddress
 	 */
 	public InetAddress getInetAddress() {
@@ -69,6 +71,7 @@ public class OSCPort {
 
 	/**
 	 * Returns the port number associated with this port.
+	 * 
 	 * @return this ports number
 	 */
 	public int getPort() {
@@ -76,9 +79,8 @@ public class OSCPort {
 	}
 
 	/**
-	 * Close the socket and free-up resources.
-	 * It is recommended that clients call this when they are done with the
-	 * port.
+	 * Close the socket and free-up resources. It is recommended that clients
+	 * call this when they are done with the port.
 	 */
 	public void close() {
 		socket.close();
