@@ -256,6 +256,7 @@ public class OSCJavaToByteArrayConverter {
 	public void write(Object anObject) {
 		// Can't do switch on class
 		if (anObject instanceof Collection) {
+			@SuppressWarnings("unchecked")
 			final Collection<Object> theArray = (Collection<Object>) anObject;
 			for (final Object entry : theArray) {
 				write(entry);
@@ -323,6 +324,7 @@ public class OSCJavaToByteArrayConverter {
 	 * @param arguments
 	 *            array of base Objects
 	 */
+	@SuppressWarnings("unchecked")
 	public String getTypes(Collection<Object> arguments) {
 		StringBuffer sb = new StringBuffer();
 
