@@ -13,11 +13,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import com.illposed.osc.AddressSelector;
 import com.illposed.osc.OSCBundle;
-import com.illposed.osc.OSCListener;
+import com.illposed.osc.OSCBundleListener;
 import com.illposed.osc.OSCMessage;
+import com.illposed.osc.OSCMessageListener;
 import com.illposed.osc.OSCPacket;
 
 /**
@@ -27,10 +29,18 @@ import com.illposed.osc.OSCPacket;
  */
 public class OSCPacketDispatcher {
 
-	private final Map<AddressSelector, OSCListener> selectorToListener;
+	/**
+	 * OSCMessageリスナ
+	 */
+	private final Map<AddressSelector, OSCMessageListener> selectorToMessageListener;
+
+	/**
+	 * OSCBundleリスナ
+	 */
+	private Optional<OSCBundleListener> bundleListener = Optional.empty();
 
 	public OSCPacketDispatcher() {
-		this.selectorToListener = new HashMap<AddressSelector, OSCListener>();
+		this.selectorToMessageListener = new HashMap<AddressSelector, OSCMessageListener>();
 	}
 
 	/**
@@ -43,8 +53,18 @@ public class OSCPacketDispatcher {
 	 * @param listener
 	 *            receives messages accepted by the selector
 	 */
-	public void addListener(AddressSelector addressSelector, OSCListener listener) {
-		selectorToListener.put(addressSelector, listener);
+	public void addMessageListener(AddressSelector addressSelector, OSCMessageListener listener) {
+		selectorToMessageListener.put(addressSelector, listener);
+	}
+
+	/**
+	 * OSCBundlerリスナを設定
+	 * 
+	 * @param listener
+	 *            OSCBundleリスナ
+	 */
+	public void setBundleListener(OSCBundleListener listener) {
+		this.bundleListener = Optional.of(listener);
 	}
 
 	public void dispatchPacket(OSCPacket packet) {
@@ -55,22 +75,26 @@ public class OSCPacketDispatcher {
 		if (packet instanceof OSCBundle) {
 			dispatchBundle((OSCBundle) packet);
 		} else {
-			dispatchMessage((OSCMessage) packet, timestamp);
+			dispatchMessage((OSCMessage) packet);
 		}
 	}
 
 	private void dispatchBundle(OSCBundle bundle) {
-		final Date timestamp = bundle.getTimestamp();
-		final List<OSCPacket> packets = bundle.getPackets();
-		for (final OSCPacket packet : packets) {
-			dispatchPacket(packet, timestamp);
+		if (this.bundleListener.isPresent()) {
+			this.bundleListener.get().acceptBundle(bundle);
+		} else {
+			final Date timestamp = bundle.getTimestamp();
+			final List<OSCPacket> packets = bundle.getPackets();
+			for (final OSCPacket packet : packets) {
+				dispatchPacket(packet, timestamp);
+			}
 		}
 	}
 
-	private void dispatchMessage(OSCMessage message, Date time) {
-		for (final Entry<AddressSelector, OSCListener> addrList : selectorToListener.entrySet()) {
+	private void dispatchMessage(OSCMessage message) {
+		for (final Entry<AddressSelector, OSCMessageListener> addrList : selectorToMessageListener.entrySet()) {
 			if (addrList.getKey().matches(message.getAddress())) {
-				addrList.getValue().acceptMessage(time, message);
+				addrList.getValue().acceptMessage(message);
 			}
 		}
 	}
