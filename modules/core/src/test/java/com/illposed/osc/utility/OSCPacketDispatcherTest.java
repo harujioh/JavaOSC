@@ -31,9 +31,9 @@ public class OSCPacketDispatcherTest {
 	public void setUp() {
 		dispatcher = new OSCPacketDispatcher();
 		listener1 = new SimpleOSCListener();
-		dispatcher.addListener(new OSCPatternAddressSelector("/listener1"), listener1);
+		dispatcher.addMessageListener(new OSCPatternAddressSelector("/listener1"), listener1);
 		listener2 = new SimpleOSCListener();
-		dispatcher.addListener(new OSCPatternAddressSelector("/listener2"), listener2);
+		dispatcher.addMessageListener(new OSCPatternAddressSelector("/listener2"), listener2);
 	}
 
 	@After

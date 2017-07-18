@@ -146,7 +146,7 @@ public class OSCPortTest {
 	public void testReceiving() throws Exception {
 		OSCMessage mesg = new OSCMessage("/message/receiving");
 		SimpleOSCListener listener = new SimpleOSCListener();
-		receiver.addListener("/message/receiving", listener);
+		receiver.addMessageListener("/message/receiving", listener);
 		receiver.startListening();
 		sender.send(mesg);
 		Thread.sleep(100); // wait a bit
@@ -161,17 +161,13 @@ public class OSCPortTest {
 		OSCBundle bundle = new OSCBundle();
 		bundle.addPacket(new OSCMessage("/bundle/receiving"));
 		SimpleOSCListener listener = new SimpleOSCListener();
-		receiver.addListener("/bundle/receiving", listener);
+		receiver.addMessageListener("/bundle/receiving", listener);
 		receiver.startListening();
 		sender.send(bundle);
 		Thread.sleep(100); // wait a bit
 		receiver.stopListening();
 		if (!listener.isMessageReceived()) {
 			Assert.fail("Message was not received");
-		}
-		if (!listener.getReceivedTimestamp().equals(bundle.getTimestamp())) {
-			Assert.fail("Message should have timestamp " + bundle.getTimestamp() + " but has "
-					+ listener.getReceivedTimestamp());
 		}
 	}
 }

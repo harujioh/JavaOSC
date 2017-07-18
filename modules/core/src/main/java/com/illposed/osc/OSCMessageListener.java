@@ -8,15 +8,13 @@
 
 package com.illposed.osc;
 
-import java.util.Date;
-
 /**
  * Allows to listen to incoming messages that match some selector pattern. In
  * OSC speak, this is a <i>Method</i>, and it listens to <i>Messages</i>.
  *
  * @author Chandrasekhar Ramakrishnan
  */
-public interface OSCListener {
+public interface OSCMessageListener {
 
 	/**
 	 * Process a matching, incoming OSC Message.
@@ -27,5 +25,5 @@ public interface OSCListener {
 	 * @param message
 	 *            The message to process.
 	 */
-	void acceptMessage(Date time, OSCMessage message);
+	void acceptMessage(OSCMessage message);
 }

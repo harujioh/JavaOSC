@@ -184,8 +184,8 @@ public class OSCPortIn extends OSCPort implements Runnable {
 	 * @param listener
 	 *            will be notified of incoming packets, if they match
 	 */
-	public void addListener(String addressSelector, OSCListener listener) {
-		this.addListener(new OSCPatternAddressSelector(addressSelector), listener);
+	public void addMessageListener(String addressSelector, OSCMessageListener listener) {
+		this.addMessageListener(new OSCPatternAddressSelector(addressSelector), listener);
 	}
 
 	/**
@@ -197,7 +197,17 @@ public class OSCPortIn extends OSCPort implements Runnable {
 	 * @param listener
 	 *            will be notified of incoming packets, if they match
 	 */
-	public void addListener(AddressSelector addressSelector, OSCListener listener) {
-		dispatcher.addListener(addressSelector, listener);
+	public void addMessageListener(AddressSelector addressSelector, OSCMessageListener listener) {
+		dispatcher.addMessageListener(addressSelector, listener);
+	}
+
+	/**
+	 * OSCBundlerリスナを設定
+	 * 
+	 * @param listener
+	 *            OSCBundleリスナ
+	 */
+	public void setBundleListener(OSCBundleListener listener) {
+		dispatcher.setBundleListener(listener);
 	}
 }
