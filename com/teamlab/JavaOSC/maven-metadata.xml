@@ -3,13 +3,14 @@
   <groupId>com.teamlab</groupId>
   <artifactId>JavaOSC</artifactId>
   <versioning>
-    <release>1.1.0</release>
+    <release>1.1.0.alpha</release>
     <versions>
       <version>1.0.1</version>
       <version>1.0.2</version>
       <version>1.0.3</version>
       <version>1.1.0</version>
+      <version>1.1.0.alpha</version>
     </versions>
-    <lastUpdated>20170718035426</lastUpdated>
+    <lastUpdated>20170720133231</lastUpdated>
   </versioning>
 </metadata>
