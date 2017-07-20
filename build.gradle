@@ -5,7 +5,7 @@ plugins {
 }
 
 def myAppName = 'JavaOSC'
-def myAppVersion = '1.1.0'
+def myAppVersion = '1.1.0.alpha'
 
 group = 'com.teamlab'
 version = myAppVersion

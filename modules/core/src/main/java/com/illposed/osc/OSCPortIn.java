@@ -52,7 +52,9 @@ public class OSCPortIn extends OSCPort implements Runnable {
 	 * Buffers were 1500 bytes in size, but were increased to 1536, as this is a
 	 * common MTU.
 	 */
-	private static final int BUFFER_SIZE = 1536;
+	private static final int BUFFER_SIZE = 10000;
+
+	private final int bufferSize;
 
 	/** state for listening */
 	private boolean listening;
@@ -65,9 +67,38 @@ public class OSCPortIn extends OSCPort implements Runnable {
 	 * @param socket
 	 *            DatagramSocket to listen on.
 	 */
+	public OSCPortIn(DatagramSocket socket, int bufferSize) {
+		super(socket, socket.getLocalPort());
+
+		this.bufferSize = bufferSize;
+		this.converter = new OSCByteArrayToJavaConverter();
+		this.dispatcher = new OSCPacketDispatcher();
+	}
+
+	/**
+	 * Create an OSCPort that listens on the specified port. Strings will be
+	 * decoded using the systems default character set.
+	 * 
+	 * @param port
+	 *            UDP port to listen on.
+	 * @throws SocketException
+	 *             if the port number is invalid, or there is already a socket
+	 *             listening on it
+	 */
+	public OSCPortIn(int port, int bufferSize) throws SocketException {
+		this(new DatagramSocket(port), bufferSize);
+	}
+
+	/**
+	 * Create an OSCPort that listens using a specified socket.
+	 * 
+	 * @param socket
+	 *            DatagramSocket to listen on.
+	 */
 	public OSCPortIn(DatagramSocket socket) {
 		super(socket, socket.getLocalPort());
 
+		this.bufferSize = BUFFER_SIZE;
 		this.converter = new OSCByteArrayToJavaConverter();
 		this.dispatcher = new OSCPacketDispatcher();
 	}
@@ -113,8 +144,8 @@ public class OSCPortIn extends OSCPort implements Runnable {
 	 */
 	@Override
 	public void run() {
-		final byte[] buffer = new byte[BUFFER_SIZE];
-		final DatagramPacket packet = new DatagramPacket(buffer, BUFFER_SIZE);
+		final byte[] buffer = new byte[this.bufferSize];
+		final DatagramPacket packet = new DatagramPacket(buffer, this.bufferSize);
 		final DatagramSocket socket = getSocket();
 		while (listening) {
 			try {
